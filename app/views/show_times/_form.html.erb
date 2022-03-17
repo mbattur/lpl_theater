@@ -1,0 +1,42 @@
+<%= form_with(model: show_time) do |form| %>
+  <% if show_time.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(show_time.errors.count, "error") %> prohibited this show_time from being saved:</h2>
+
+      <ul>
+        <% show_time.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :total_seats, style: "display: block" %>
+    <%= form.number_field :total_seats %>
+  </div>
+
+  <div>
+    <%= form.label :sold_seats, style: "display: block" %>
+    <%= form.number_field :sold_seats %>
+  </div>
+
+  <div>
+    <%= form.label :show_date_and_time, style: "display: block" %>
+    <%= form.datetime_field :show_date_and_time %>
+  </div>
+
+  <div>
+    <%= form.label :ticket_price, style: "display: block" %>
+    <%= form.number_field :ticket_price %>
+  </div>
+
+  <div>
+    <%= form.label :movie_id, style: "display: block" %>
+    <%= form.number_field :movie_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

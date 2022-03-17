@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @show_time %>
+
+<div>
+  <%= link_to "Edit this show time", edit_show_time_path(@show_time) %> |
+  <%= link_to "Back to show times", show_times_path %>
+
+  <%= button_to "Destroy this show time", @show_time, method: :delete %>
+</div>
