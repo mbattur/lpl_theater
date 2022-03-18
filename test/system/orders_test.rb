@@ -16,7 +16,7 @@ class OrdersTest < ApplicationSystemTestCase
 
     fill_in "Customer", with: @order.customer_id
     fill_in "Number of ticket", with: @order.number_of_ticket
-    fill_in "Showtime", with: @order.showtime_id
+    fill_in "Showtime", with: @order.show_time_id
     click_on "Create Order"
 
     assert_text "Order was successfully created"
@@ -29,7 +29,7 @@ class OrdersTest < ApplicationSystemTestCase
 
     fill_in "Customer", with: @order.customer_id
     fill_in "Number of ticket", with: @order.number_of_ticket
-    fill_in "Showtime", with: @order.showtime_id
+    fill_in "Showtime", with: @order.show_time_id
     click_on "Update Order"
 
     assert_text "Order was successfully updated"
