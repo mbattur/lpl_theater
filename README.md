@@ -24,3 +24,5 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+Credit card number validation: Credit and debit cards have a total of 16 digits printed on the front, though a card can have as many as 19 digits or as little as 13. Source: https://www.point.app/article/a-guide-to-understanding-the-numbers-on-credit-debit-cards

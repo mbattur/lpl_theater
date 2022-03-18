@@ -1,14 +1,28 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Movies</h1>
+<div>
+  <div>
+    <h1>Movies</h1>
+    <p><%= link_to "New movie", new_movie_path %></p>
+  </div>
+  <div>
+    <% @movies.each do |movie| %>
+      <div class="col">
+        <div class="card shadow-sm">
 
-<div id="movies">
-  <% @movies.each do |movie| %>
-    <%= render movie %>
-    <p>
-      <%= link_to "Show this movie", movie %>
-    </p>
-  <% end %>
+          <div class="card-body">
+            <h4 class="card-text"><%= movie.name %></h4>
+            <div class="d-flex justify-content-between align-items-center">
+              <% movie.show_times.each do |show_time| %>
+                <a href="show_times/<%= show_time.id %>" class="btn btn-primary"><%= time_only(show_time.show_date_and_time) %></a>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New movie", new_movie_path %>
+

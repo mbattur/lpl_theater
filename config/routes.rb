@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   resources :movies
   resources :customers
 
-  root "show_times#index"
+  root "movies#index"
 end
