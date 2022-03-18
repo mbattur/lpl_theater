@@ -1,3 +1,3 @@
 class Movie < ApplicationRecord
-  has_many :show_times, foreign_key: "movie_id", primary_key: "id"
+  has_many :show_times
 end
