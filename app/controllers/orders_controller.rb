@@ -35,6 +35,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        OrderMailer.ticket_purchase_email(@order).deliver
         format.html { redirect_to show_time_order_path(@show_time, @order), notice: "Order was successfully created." }
         format.json { render :show, status: :created, location: @order }
       else
