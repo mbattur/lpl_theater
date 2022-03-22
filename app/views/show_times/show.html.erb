@@ -1,10 +1,35 @@
 <p style="color: green"><%= notice %></p>
+<p style="color: green"><%= notice %></p>
 
-<%= render @show_time %>
+<h3><%= @show_time.movie_name %></h3>
+<p><%= date_and_time(@show_time.show_date_and_time) %></p>
+<p>Number of seat available: <%= @show_time.total_seats %></p>
+<p>Ticket price: <%= number_to_currency(@show_time.ticket_price) %></p>
 
-<div>
-  <%= link_to "Edit this show time", edit_show_time_path(@show_time) %> |
-  <%= link_to "Back to show times", show_times_path %>
-
-  <%= button_to "Destroy this show time", @show_time, method: :delete %>
-</div>
+<%= form_with(model: [@show_time, @show_time.orders.build], local: true) do |f| %>
+  <%= f.label 'Number of Tickets' %>
+  <%= f.number_field :number_of_ticket, min: 1, class: 'form-control' %>
+  <%= fields_for :customer do |c| %>
+    <p>
+      <%= c.label :first_name %>
+      <%= c.text_field :first_name, required: true %>
+    </p>
+    <p>
+      <%= c.label :last_name %>
+      <%= c.text_field :last_name, required: true %>
+    </p>
+    <p>
+      <%= c.label :email %>
+      <%= c.text_field :email, required: true %>
+    </p>
+      <p>
+      <%= c.label :credit_card_number %>
+      <%= c.text_field :credit_card_number, required: true %>
+    </p>
+    <p>
+      <%= c.label :expiration_date %>
+      <%= c.text_field :expiration_date, required: true %>
+    </p>
+  <% end %>
+  <%= f.submit 'Submit', class: 'btn btn-primary' %>
+<% end %>

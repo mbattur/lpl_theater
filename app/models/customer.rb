@@ -4,7 +4,11 @@ class Customer < ApplicationRecord
   validates :first_name, :last_name, :credit_card_number, :expiration_date, :email, presence: true
   validates :email, format: { with: EMAIL_REGEX }
   #credit_card_number - card can have as many as 19 digits or as little as 13. Details are in README.
-  validates :credit_card_number, numericality: { only_integer: true, greater_than_or_equal_to: 13, less_than_or_equal_to: 19 }
+  validates :credit_card_number, length: { minimum: 13, maximum: 19 }
 
   has_many :orders
+
+  def full_name
+    first_name + " " + last_name
+  end
 end

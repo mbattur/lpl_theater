@@ -15,8 +15,8 @@
           <div class="card-body">
             <h4 class="card-text"><%= movie.name %></h4>
             <div class="align-items-center">
-              <% movie.show_times.each do |show_time| %>
-                <a href="show_times/<%= show_time.id %>" class="btn btn-primary"><%= time_only(show_time.show_date_and_time) %></a>
+              <% movie.show_times.seats_available.each do |show_time| %>
+                 <%= link_to time_only(show_time.show_date_and_time), show_time_path(show_time), class: "btn btn-primary" %>
               <% end %>
             </div>
           </div>

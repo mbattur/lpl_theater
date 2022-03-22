@@ -1,10 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @order %>
-
-<div>
-  <%= link_to "Edit this order", edit_order_path(@order) %> |
-  <%= link_to "Back to orders", orders_path %>
-
-  <%= button_to "Destroy this order", @order, method: :delete %>
-</div>
+<h3>
+  Thank you for purchasing tickets for <%= @order.show_time.movie_name %>
+</h3>
+<p>
+  Number of tickes: <%= @order.number_of_ticket %>
+</p>
+<p>
+  Date and Time: <%= date_and_time(@order.show_time.show_date_and_time) %>
+</p>
+<p>
+  Order confirmation will be emailed to: <%= @order.customer.email %>
+</p>

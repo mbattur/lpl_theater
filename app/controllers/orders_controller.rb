@@ -13,6 +13,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = Order.new
+    @customer = Customer.new
   end
 
   # GET /orders/1/edit
@@ -21,11 +22,20 @@ class OrdersController < ApplicationController
 
   # POST /orders or /orders.json
   def create
-    @order = Order.new(order_params)
+    @show_time = ShowTime.find(params[:show_time_id])
+    @customer = Customer.find_or_create_by!(
+      email: params[:customer][:email],
+      first_name: params[:customer][:first_name],
+      last_name: params[:customer][:last_name],
+      credit_card_number: params[:customer][:credit_card_number],
+      expiration_date: params[:customer][:expiration_date],
+    )
+    @order = @show_time.orders.new(order_params.merge(customer: @customer))
+    
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
+        format.html { redirect_to show_time_order_path(@show_time, @order), notice: "Order was successfully created." }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -66,5 +76,9 @@ class OrdersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def order_params
       params.require(:order).permit(:number_of_ticket, :show_time_id, :customer_id)
+    end
+
+    def customer_params
+      params.require(:customer).permit(:first_name, :last_name, :credit_card_number, :expiration_date, :email)
     end
 end

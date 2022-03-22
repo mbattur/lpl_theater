@@ -2,13 +2,25 @@
 
 <h1>Orders</h1>
 
-<div id="orders">
-  <% @orders.each do |order| %>
-    <%= render order %>
-    <p>
-      <%= link_to "Show this order", order %>
-    </p>
-  <% end %>
-</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Movie Name</th>
+      <th scope="col">ShowTime</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Number of Tickes</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      <% @orders.each do |order| %>
+        <tr>
+          <th scope="row"><%= order.show_time.movie_name %></th>
+          <td><%= date_and_time(order.show_time.show_date_and_time) %></td>
+          <td><%= order.customer.full_name %></td>
+          <td><%= order.number_of_ticket %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
 
-<%= link_to "New order", new_order_path %>
