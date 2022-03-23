@@ -83,8 +83,12 @@ class OrdersController < ApplicationController
     frequency = show_time_id_array.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
     @popular_show_time_id = show_time_id_array.max_by(50) { |v| frequency[v] }.uniq
 
-    # @popular_movies = 
-    # @daily_sales = 
+    @popular_movies = []
+    @popular_show_time_id.each do |id|
+      @popular_movies.push(ShowTime.find(id).movie_name)
+    end
+
+
   end
 
   private

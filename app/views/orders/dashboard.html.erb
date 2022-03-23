@@ -28,7 +28,6 @@
 </table>
 
 <h5>Popular Movies</h5>
-
 <table class="table">
   <thead>
     <tr>
@@ -36,9 +35,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @popular_show_time_id.each do |id| %>
+    <% @popular_movies.uniq.each do |movie| %>
       <tr>
-        <th><%= find_show_by_id(id).movie_name %></th>
+        <th><%= movie %></th>
       </tr>
     <% end %>
   </tbody>
