@@ -1,19 +1,23 @@
 ActiveAdmin.register ShowTime do
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :total_seats, :sold_seats, :show_date_and_time, :ticket_price, :movie_id
-  #
   includes :movie
-  # or
-  #
-  # permit_params do
-  #   permitted = [:total_seats, :sold_seats, :show_date_and_time, :ticket_price, :movie_id]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
+
+  scope :all
+  scope :popular
+
+  index do       
+    column :total_seats
+    column :sold_seats
+    column :show_date_and_time
+    column :ticket_price
+    column :movie_name
+    column(:total_sale_per_show) { |r| number_to_currency(r.total_sale_per_show) }
+
+    div class: "panel" do
+      h3 "Total Revenue: #{collection.pluck(:sold_seats).sum}"
+    end
+
+    div class: "panel" do
+      h3 "Total Revenue: #{:total_sale_per_show}"
+    end
+  end
 end

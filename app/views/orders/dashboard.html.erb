@@ -1,0 +1,45 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Dashboard</h1>
+
+<h5>Popular ShowTimes</h5>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Movie Name</th>
+      <th scope="col">ShowTime</th>
+      <th scope="col">Total Seats</th>
+      <th scope="col">Seats Sold</th>
+      <th scope="col">Ticket Price</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @popular_show_time_id.each do |id| %>
+        <tr>
+          <th><%= find_show_by_id(id).movie_name %></th>
+          <td><%= date_and_time(find_show_by_id(id).show_date_and_time) %></td>
+          <td><%= find_show_by_id(id).total_seats %></td>
+          <td><%= find_show_by_id(id).sold_seats %></td>
+          <td><%= find_show_by_id(id).ticket_price %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<h5>Popular Movies</h5>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Movie Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @popular_show_time_id.each do |id| %>
+      <tr>
+        <th><%= find_show_by_id(id).movie_name %></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

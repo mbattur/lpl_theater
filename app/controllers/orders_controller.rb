@@ -3,7 +3,13 @@ class OrdersController < ApplicationController
 
   # GET /orders or /orders.json
   def index
-    @orders = Order.all
+    @orders = Order.includes([:show_time, :customer, show_time: [:movie]]).all
+
+    @total_revenue = 0
+    @orders.each do |order|
+      @total_revenue += (order.number_of_ticket * order.show_time.ticket_price)
+    end
+    @total_revenue
   end
 
   # GET /orders/1 or /orders/1.json
@@ -35,6 +41,9 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        @show_time.total_seats -= order_params[:number_of_ticket].to_i
+        @show_time.sold_seats += order_params[:number_of_ticket].to_i
+        @show_time.save
         OrderMailer.ticket_purchase_email(@order).deliver
         format.html { redirect_to show_time_order_path(@show_time, @order), notice: "Order was successfully created." }
         format.json { render :show, status: :created, location: @order }
@@ -68,13 +77,21 @@ class OrdersController < ApplicationController
     end
   end
 
+  def dashboard
+    @orders = Order.includes([:show_time, :customer, show_time: [:movie]]).all
+    show_time_id_array = @orders.pluck(:show_time_id)
+    frequency = show_time_id_array.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    @popular_show_time_id = show_time_id_array.max_by(50) { |v| frequency[v] }.uniq
+
+    # @popular_movies = 
+    # @daily_sales = 
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_order
       @order = Order.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def order_params
       params.require(:order).permit(:number_of_ticket, :show_time_id, :customer_id)
     end

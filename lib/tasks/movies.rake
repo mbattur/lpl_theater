@@ -2,7 +2,7 @@ namespace :movies do
   desc "Seeds movies"
   task seed: :environment do
     puts "Seeding movies..."
-    10.times do
+    5.times do
       Movie.create!(name: Faker::Movie.title)
     end
     puts "#{Movie.count} movies created"

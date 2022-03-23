@@ -2,6 +2,8 @@
 
 <h1>Orders</h1>
 
+<h5>Total Revenue: <%= number_to_currency(@total_revenue) %></h5>
+
 <table class="table">
   <thead>
     <tr>
@@ -10,17 +12,18 @@
       <th scope="col">Customer Name</th>
       <th scope="col">Customer Email</th>
       <th scope="col">Number of Tickes</th>
+      <th scope="col">Total</th>
     </tr>
   </thead>
   <tbody>
-    
       <% @orders.each do |order| %>
         <tr>
-          <th scope="row"><%= order.show_time.movie_name %></th>
+          <th><%= order.show_time.movie_name %></th>
           <td><%= date_and_time(order.show_time.show_date_and_time) %></td>
           <td><%= order.customer.full_name %></td>
           <td><%= order.customer.email %></td>
           <td><%= order.number_of_ticket %></td>
+          <td><%= number_to_currency(order.number_of_ticket * order.show_time.ticket_price) %></td>
         </tr>
       <% end %>
   </tbody>

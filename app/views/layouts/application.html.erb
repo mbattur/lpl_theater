@@ -19,6 +19,9 @@
                 <%= link_to "Showtimes", show_times_path, class: "nav-link" %>
                 <% if user_signed_in? %>
                   <li class="nav-item">
+                    <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
+                  </li>
+                  <li class="nav-item">
                     <%= link_to "Orders", order_history_path, class: "nav-link" %>
                   </li>
                   <li class="nav-item">
@@ -28,6 +31,9 @@
             </div>
             <div class="navbar-nav ms-auto">              	
               <% if user_signed_in? %>
+                <li class="nav-item">
+                  <%= link_to "Admin", admin_root_path, class: "nav-link" %>
+                </li>
                 <li class="nav-item">
                   <%= link_to "Sign Out", destroy_user_session_path, class: "nav-link" %>
                 </li>
