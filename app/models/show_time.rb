@@ -4,6 +4,7 @@ class ShowTime < ApplicationRecord
   belongs_to :movie
 
   scope :seats_available, -> { where("sold_seats < total_seats") }
+  scope :active, -> { where("show_date_and_time >= ?", Date.today) }
   scope :popular, -> { where("sold_seats > ?", 10) }
 
   def movie_name
