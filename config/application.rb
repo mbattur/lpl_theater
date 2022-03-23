@@ -11,12 +11,20 @@ module LplTheater
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    # Mailer settings
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.default_url_options = {host: ENV["APPLICATION_DOMAIN"]}
+    config.action_mailer.asset_host = ENV["APPLICATION_URL"]
+    config.action_mailer.perform_deliveries = true
+
+    config.action_mailer.smtp_settings = {
+      domain: ENV["APPLICATION_DOMAIN"],
+      address: ENV["EMAIL_HOST_ADDRESS"],
+      user_name: ENV["EMAIL_USERNAME"],
+      password: ENV["EMAIL_PASSWORD"],
+      authentication: "plain",
+      port: 587,
+      enable_starttls_auto: true
+    }
   end
 end
