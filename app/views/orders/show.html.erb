@@ -1,14 +1,3 @@
 <p style="color: green"><%= notice %></p>
 
-<h3>
-  Thank you for purchasing tickets for <%= @order.show_time.movie_name %>
-</h3>
-<p>
-  Number of tickes: <%= @order.number_of_ticket %>
-</p>
-<p>
-  Date and Time: <%= date_and_time(@order.show_time.show_date_and_time) %>
-</p>
-<p>
-  Order confirmation will be emailed to: <%= @order.customer.email %>
-</p>
+<%= render "shared/order_confirmation" %>

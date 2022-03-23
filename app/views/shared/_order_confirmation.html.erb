@@ -1,0 +1,12 @@
+<h3>
+  Thank you for purchasing tickets for <%= @order.show_time.movie_name %>
+</h3>
+<p>
+  Number of tickes: <%= @order.number_of_ticket %>
+</p>
+<p>
+  Show Date and Time: <%= date_and_time(@order.show_time.show_date_and_time) %>
+</p>
+<p>
+  Total cost: <%= number_to_currency(@order.number_of_ticket * @order.show_time.ticket_price) %>
+</p>
