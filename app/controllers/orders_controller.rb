@@ -18,8 +18,8 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @order = Order.new
-    @customer = Customer.new
+    @show_time = ShowTime.find(params[:show_time_id])
+    @show_time.orders.build
   end
 
   # GET /orders/1/edit
@@ -29,6 +29,8 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @show_time = ShowTime.find(params[:show_time_id])
+    @order = @show_time.orders.new(order_params)
+
     @customer = Customer.find_or_create_by!(
       email: params[:customer][:email],
       first_name: params[:customer][:first_name],
@@ -37,7 +39,6 @@ class OrdersController < ApplicationController
       expiration_date: params[:customer][:expiration_date],
     )
     @order = @show_time.orders.new(order_params.merge(customer: @customer))
-    
 
     respond_to do |format|
       if @order.save
@@ -78,6 +79,7 @@ class OrdersController < ApplicationController
   end
 
   def dashboard
+    @popular_show_times = ShowTime.includes(:movie).all.by_sold_seats.first(5)
     @orders = Order.includes([:show_time, :customer, show_time: [:movie]]).all
     show_time_id_array = @orders.pluck(:show_time_id)
     frequency = show_time_id_array.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
@@ -87,8 +89,6 @@ class OrdersController < ApplicationController
     @popular_show_time_id.each do |id|
       @popular_movies.push(ShowTime.find(id).movie_name)
     end
-
-
   end
 
   private
@@ -97,7 +97,16 @@ class OrdersController < ApplicationController
     end
 
     def order_params
-      params.require(:order).permit(:number_of_ticket, :show_time_id, :customer_id)
+      params.permit(
+        :number_of_ticket,
+        customer_attributes: [
+          :first_name,
+          :last_name,
+          :email,
+          :credit_card_number,
+          :expiration_date
+        ]
+      )
     end
 
     def customer_params

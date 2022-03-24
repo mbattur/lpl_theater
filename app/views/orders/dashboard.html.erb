@@ -15,13 +15,13 @@
     </tr>
   </thead>
   <tbody>
-      <% @popular_show_time_id.each do |id| %>
+      <% @popular_show_times.each do |show| %>
         <tr>
-          <th><%= find_show_by_id(id).movie_name %></th>
-          <td><%= date_and_time(find_show_by_id(id).show_date_and_time) %></td>
-          <td><%= find_show_by_id(id).total_seats %></td>
-          <td><%= find_show_by_id(id).sold_seats %></td>
-          <td><%= find_show_by_id(id).ticket_price %></td>
+          <th><%= show.movie_name %></th>
+          <td><%= date_and_time(show.show_date_and_time) %></td>
+          <td><%= show.total_seats %></td>
+          <td><%= show.sold_seats %></td>
+          <td><%= show.ticket_price %></td>
         </tr>
       <% end %>
   </tbody>
