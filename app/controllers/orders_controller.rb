@@ -29,7 +29,6 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @show_time = ShowTime.find(params[:show_time_id])
-    @order = @show_time.orders.new(order_params)
 
     @customer = Customer.find_or_create_by!(
       email: params[:customer][:email],
@@ -42,9 +41,8 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        @show_time.total_seats -= order_params[:number_of_ticket].to_i
-        @show_time.sold_seats += order_params[:number_of_ticket].to_i
-        @show_time.save
+        @show_time.sold_seats += @order.number_of_ticket
+        @show_time.save!
         OrderMailer.ticket_purchase_email(@order).deliver
         format.html { redirect_to show_time_order_path(@show_time, @order), notice: "Order was successfully created." }
         format.json { render :show, status: :created, location: @order }
