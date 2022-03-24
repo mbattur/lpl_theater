@@ -14,11 +14,15 @@
         <div class="card shadow-sm">
           <div class="card-body">
             <h4 class="card-text"><%= movie.name %></h4>
-            <div class="align-items-center">
-              <% movie.show_times.active.seats_available.by_date.each do |show_time| %>
-                 <%= link_to time_only(show_time.show_date_and_time), new_show_time_order_path(show_time.id), class: "btn btn-primary" %>
-              <% end %>
-            </div>
+            <% if movie.show_times.active.seats_available.by_date.any? %>
+              <div class="align-items-center">
+                <% movie.show_times.active.seats_available.by_date.each do |show_time| %>
+                  <%= link_to time_only(show_time.show_date_and_time), new_show_time_order_path(show_time.id), class: "btn btn-primary" %>
+                <% end %>
+              </div>
+            <% else %>
+              <p>Got Netflix?</p>
+            <% end %>
           </div>
         </div>
       </div>
