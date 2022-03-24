@@ -1,7 +1,7 @@
 <%= form_with(model: order, url: show_time_orders_path, local: true) do |f| %>
   <p>
     <%= f.label :number_of_ticket, style: "display: block" %>
-    <%= f.number_field :number_of_ticket %>
+    <%= f.number_field :number_of_ticket, min: 1, max: @show_time.available_seats %>
   <p>
     <%= f.fields_for :customer do |customer_form| %>
       <p>

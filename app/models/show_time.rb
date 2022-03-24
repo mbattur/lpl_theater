@@ -16,4 +16,8 @@ class ShowTime < ApplicationRecord
   def total_sale_per_show
     ticket_price * sold_seats
   end
+
+  def available_seats
+    total_seats - sold_seats
+  end
 end
