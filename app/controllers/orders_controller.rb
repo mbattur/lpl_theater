@@ -20,6 +20,7 @@ class OrdersController < ApplicationController
   def new
     @show_time = ShowTime.find(params[:show_time_id])
     @show_time.orders.build
+    @errors = []
   end
 
   # GET /orders/1/edit
@@ -29,28 +30,22 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @show_time = ShowTime.find(params[:show_time_id])
-    @order = @show_time.orders.new(order_params)
 
-    @customer = Customer.find_or_create_by!(
+    @customer = Customer.find_or_create_by(
       email: params[:customer][:email],
       first_name: params[:customer][:first_name],
       last_name: params[:customer][:last_name],
       credit_card_number: params[:customer][:credit_card_number],
       expiration_date: params[:customer][:expiration_date],
     )
-    @order = @show_time.orders.new(order_params.merge(customer: @customer))
 
-    respond_to do |format|
-      if @order.save
-        @show_time.total_seats -= order_params[:number_of_ticket].to_i
-        @show_time.sold_seats += order_params[:number_of_ticket].to_i
-        @show_time.save
+    if valid_request(@customer)
+      @order = @show_time.orders.new(order_params.merge(customer: @customer))
+      if valid_request(@order)
+        @show_time.sold_seats += @order.number_of_ticket
+        @show_time.save!
         OrderMailer.ticket_purchase_email(@order).deliver
-        format.html { redirect_to show_time_order_path(@show_time, @order), notice: "Order was successfully created." }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        redirect_to show_time_order_path(@show_time, @order)
       end
     end
   end
@@ -92,6 +87,14 @@ class OrdersController < ApplicationController
   end
 
   private
+
+    def valid_request(object)
+      return true if object.save
+
+      @errors = object.errors.full_messages
+      render :edit and return false
+    end
+
     def set_order
       @order = Order.find(params[:id])
     end

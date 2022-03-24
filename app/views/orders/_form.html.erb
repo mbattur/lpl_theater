@@ -1,7 +1,18 @@
 <%= form_with(model: order, url: show_time_orders_path, local: true) do |f| %>
+  <% if @errors.any? %>
+    <div style="color: red">
+      <h5><%= pluralize(@errors.count, "error") %> prohibited this order from being saved:</h5>
+
+      <ul>
+        <% @errors.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <p>
     <%= f.label :number_of_ticket, style: "display: block" %>
-    <%= f.number_field :number_of_ticket, min: 1 %>
+    <%= f.number_field :number_of_ticket, value: 1, min: 1, max: @show_time.available_seats %>
   <p>
     <%= f.fields_for :customer do |customer_form| %>
       <p>
@@ -26,7 +37,7 @@
     <% end %>
 
   <div>
-    <%= f.submit %>
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
   </div>
 <% end %>
 

@@ -1,6 +1,7 @@
 <h1>New order for <%= @show_time.movie_name %></h1>
 <p>Showing at: <%= date_and_time(@show_time.show_date_and_time) %></p>
 <p><%= number_to_currency(@show_time.ticket_price) %> per ticket</p>
+<p>Number of seat available: <%= @show_time.available_seats %></p>
 
 <%= render "form", order: @order %>
 
