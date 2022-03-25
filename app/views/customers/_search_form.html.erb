@@ -1,0 +1,15 @@
+<%= search_form_for @q do |f| %>
+  <p>
+    <%= f.label :first_name_start, style: "display: block" %>
+    <%= f.search_field :first_name_start %>
+  </p>
+  <p>
+    <%= f.label :last_name_start, style: "display: block" %>
+    <%= f.search_field :last_name_start %>
+  </p>
+  <p>
+    <%= f.label :email_cont, style: "display: block" %>
+    <%= f.search_field :email_cont %>
+  </p>
+  <%= f.submit 'Search', class: 'btn btn-primary' %>
+<% end %><br>
