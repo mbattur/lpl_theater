@@ -347,6 +347,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.3)
+  ransack
   redis (~> 4.0)
   rspec-rails (~> 5.0.0)
   selenium-webdriver

@@ -4,10 +4,12 @@
 
 <h5>Total Revenue: <%= number_to_currency(@total_revenue) %></h5>
 
+<%= render "orders/search_form" %>
+
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Movie Name</th>
+      <th scope="col"><%= sort_link(@q, :show_time_movie_name, "Movie Name", default_order: :asc) %></th>
       <th scope="col">ShowTime</th>
       <th scope="col">Customer Name</th>
       <th scope="col">Customer Email</th>

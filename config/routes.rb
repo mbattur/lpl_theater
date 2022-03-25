@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
   resources :movies
   resources :customers
-  get "order_history", to: "orders#index"
+  get "orders", to: "orders#index"
   get "dashboard", to: "orders#dashboard"
 
   root "movies#index"

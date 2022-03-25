@@ -43,6 +43,7 @@ gem "pg"
 gem "devise"
 gem "activeadmin"
 gem "faker"
+gem "ransack"
 
 # Use Sass to process CSS
 # gem "sassc-rails"

@@ -3,7 +3,8 @@ class OrdersController < ApplicationController
 
   # GET /orders or /orders.json
   def index
-    @orders = Order.includes([:show_time, :customer, show_time: [:movie]]).all
+    @q = Order.ransack(params[:q])
+    @orders = @q.result.includes([:show_time, :customer, show_time: [:movie]])
 
     @total_revenue = 0
     @orders.each do |order|
