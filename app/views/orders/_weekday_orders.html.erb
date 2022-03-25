@@ -1,0 +1,29 @@
+<h5 class="text-primary"><%= weekday.capitalize %> Orders (<%= orders.count %>)</h5>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Movie Name</th>
+      <th scope="col">Show Date and Time</th>
+      <th scope="col">Number of Ticket</th>
+      <th scope="col">Ticket Price</th>
+      <th scope="col">Total Seats</th>
+      <th scope="col">Sold Seats</th>
+    </tr>
+  </thead>
+  <% if orders.any? %>
+    <tbody>
+      <% orders.each do |order| %>
+        <tr>
+          <th><%= order.show_time.movie_name %></th>
+          <td><%= date_and_time(order.show_time.show_date_and_time) %></td>
+          <td><%= order.number_of_ticket %></td>
+          <td><%= number_to_currency(order.show_time.ticket_price) %></td>
+          <td><%= order.show_time.total_seats %></td>
+          <td><%= order.show_time.sold_seats %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% else %>
+    <p class="text-danger">No <%= weekday.capitalize %> Orders</p>
+  <% end %>
+</table>

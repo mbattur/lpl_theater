@@ -2,7 +2,7 @@
 
 <h1>Dashboard</h1>
 
-<h5>Popular ShowTimes</h5>
+<h5 class="text-primary">Popular ShowTimes</h5>
 
 <table class="table">
   <thead>
@@ -27,7 +27,7 @@
   </tbody>
 </table>
 
-<h5>Popular Movies</h5>
+<h5 class="text-primary">Popular Movies</h5>
 <table class="table">
   <thead>
     <tr>
@@ -42,3 +42,11 @@
     <% end %>
   </tbody>
 </table>
+
+<%= render partial: "orders/weekday_orders", locals: { weekday: "monday", orders: @monday_orders } %>
+<%= render partial: "orders/weekday_orders", locals: { weekday: "tuesday", orders: @tuesday_orders } %>
+<%= render partial: "orders/weekday_orders", locals: { weekday: "wednesday", orders: @wednesday_orders } %>
+<%= render partial: "orders/weekday_orders", locals: { weekday: "thursday", orders: @thursday_orders } %>
+<%= render partial: "orders/weekday_orders", locals: { weekday: "friday", orders: @friday_orders } %>
+<%= render partial: "orders/weekday_orders", locals: { weekday: "saturday", orders: @saturday_orders } %>
+<%= render partial: "orders/weekday_orders", locals: { weekday: "sunday", orders: @sunday_orders } %>

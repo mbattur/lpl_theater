@@ -76,7 +76,7 @@ class OrdersController < ApplicationController
 
   def dashboard
     @popular_show_times = ShowTime.includes(:movie).all.by_sold_seats.first(5)
-    @orders = Order.includes([:show_time, :customer, show_time: [:movie]]).all
+    @orders = Order.includes([:show_time, show_time: [:movie]]).all
     show_time_id_array = @orders.pluck(:show_time_id)
     frequency = show_time_id_array.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
     @popular_show_time_id = show_time_id_array.max_by(50) { |v| frequency[v] }.uniq
@@ -84,6 +84,34 @@ class OrdersController < ApplicationController
     @popular_movies = []
     @popular_show_time_id.each do |id|
       @popular_movies.push(ShowTime.find(id).movie_name)
+    end
+
+    @monday_orders = []
+    @tuesday_orders = []
+    @wednesday_orders = []
+    @thursday_orders = []
+    @friday_orders = []
+    @saturday_orders = []
+    @sunday_orders = []
+
+    @orders.each do |order|
+      show_day = order.show_time.show_date_and_time.strftime("%A")
+
+      if show_day == "Monday"
+        @monday_orders.push(order)
+      elsif show_day == "Tuesday"
+        @tuesday_orders.push(order)
+      elsif show_day == "Wednessday"
+        @wednesday_orders.push(order)
+      elsif show_day == "Thursday"
+        @thursday_orders.push(order)
+      elsif show_day == "Friday"
+        @friday_orders.push(order)
+      elsif show_day == "Saturday"
+        @saturday_orders.push(order)
+      else show_day == "Sunday"
+        @sunday_orders.push(order)
+      end
     end
   end
 
